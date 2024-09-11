@@ -37,13 +37,16 @@ public class _03Mapping {
                 //.flatMap(wordArr -> Arrays.stream(wordArr))
                 .flatMap(Arrays::stream)
                 .distinct()
-                .forEach(System.out::println);
+                .forEach(System.out::print);
 
+        System.out.println();
         System.out.println("===== flatMap()");
         words.stream()
                 .flatMap(word -> Arrays.stream(word.split("")))
                 .distinct()
-                .forEach(System.out::println);
+                .forEach(System.out::print);
+
+        System.out.println();
 
         // flatMap
         List<Integer> numbers1 = Arrays.asList(1,2,3,4,5);
