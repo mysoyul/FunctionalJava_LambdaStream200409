@@ -14,6 +14,7 @@ public class FilteringApples{
         filterApples(inventory, apple -> apple.getColor().equals("green"));
         filterApples(inventory, apple -> isGreenApple(apple));
         filterApples(inventory, FilteringApples::isGreenApple);
+        filterApples(inventory, FilteringApples::isHeavyApple);
 
         // []
         List<Apple> weirdApples = filterApples(inventory, (Apple a) -> a.getWeight() < 80 ||
