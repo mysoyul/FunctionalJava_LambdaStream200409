@@ -15,7 +15,7 @@ public class StreamBasic {
         System.out.println("---");
 
         // Java 8
-
+        getLowCaloricDishesNamesInJava8(Dish.menu).forEach(System.out::println);
 
     }
 
@@ -43,10 +43,21 @@ public class StreamBasic {
 
     //Java 8
     public static List<String> getLowCaloricDishesNamesInJava8(List<Dish> dishes){
-        return null;
+//        return dishes.stream() //Stream<Dish>
+//                .filter(dish -> dish.getCalories() <= 400) //Stream<Dish>
+//                .sorted(Comparator.comparing(dish -> dish.getCalories()))
+//                .map(dish -> dish.getName()) //Stream<String>
+//                .collect(Collectors.toList())
+//                .subList(0,3); //List<String>
 
-
+        return dishes.stream()
+                .filter(dish -> dish.getCalories() <= 400)
+                .sorted(comparing(Dish::getCalories))
+                .map(Dish::getName)
+                .toList().subList(0,3);
     }
+
+
 
     //400칼로리 이하인 메뉴를 다이어트로, 아닐 경우 일반으로 그룹핑해라.
     public static Map<String, List<Dish>>  getGroupingMenu(List<Dish> dishes){
