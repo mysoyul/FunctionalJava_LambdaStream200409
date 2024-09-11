@@ -21,18 +21,16 @@ public class _04Finding {
 
     //1. anyMatch
     private static boolean isVegetarianFriendlyMenu(){
-        return false;
+        return menu.stream().anyMatch(Dish::isVegetarian);
     }
     //2.allMatch
     private static boolean isHealthyMenu(){
-
-        return false;
+        return menu.stream().allMatch(dish -> dish.getCalories() <= 800);
     }
 
     //3. noneMatch
     private static boolean isHealthyMenu2(){
-
-        return false;
+        return menu.stream().noneMatch(dish -> dish.getCalories() > 800);
     }
     //4. findAny
     private static Optional<Dish> findVegetarianDish(){
