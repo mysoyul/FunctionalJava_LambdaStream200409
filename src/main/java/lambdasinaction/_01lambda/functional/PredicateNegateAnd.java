@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 
 import lambdasinaction._01lambda.basic1.Apple;
 
-public class FunctionNegateAnd {
+public class PredicateNegateAnd {
 	public static void main(String[] args) {
 		List<Apple> inventory = new ArrayList<>();
 		inventory.add(new Apple(150, "green"));
@@ -23,7 +23,13 @@ public class FunctionNegateAnd {
 
 		System.out.println(filterApples2(inventory, notRedApple));
 		System.out.println(filterApples2(inventory, redHeavyApple));
+		filterApples2(inventory, redApple.or(a -> a.getWeight() > 150))
+				.forEach(System.out::println);
 
+		System.out.println("Predicate not");
+		Predicate<Apple> greenApple = Predicate.not(redApple);
+		filterApples2(inventory, greenApple)
+				.forEach(System.out::println);
 	}
 
 	public static List<Apple> filterApples2(List<Apple> inventory, Predicate<Apple> p) {

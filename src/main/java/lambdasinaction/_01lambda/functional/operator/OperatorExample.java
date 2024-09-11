@@ -14,9 +14,22 @@ public class OperatorExample {
 
 	public static void main(String[] args) {
 		// 최대값 얻기
-		
+		//1. Anonymous Inner class
+		maxOrMin(new IntBinaryOperator() {
+			@Override
+			public int applyAsInt(int left, int right) {
+				if(left >= right) return left;
+				else return right;
+			}
+		});
+		//2. Lambda 식
+		int max = maxOrMin((n1,n2) -> Math.max(n1,n2));
+		//3. Method Reference
+		max = maxOrMin(Math::max);
+		System.out.println("max = " + max);
 		
 		// 최소값 얻기
-		
+		int min = maxOrMin(Math::min);
+		System.out.println("min = " + min);
 	}
 }
