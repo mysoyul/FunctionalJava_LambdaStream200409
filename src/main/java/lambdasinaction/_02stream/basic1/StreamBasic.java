@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 public class StreamBasic {
@@ -16,6 +17,8 @@ public class StreamBasic {
 
         // Java 8
         getLowCaloricDishesNamesInJava8(Dish.menu).forEach(System.out::println);
+
+        System.out.println(getGroupingMenu(Dish.menu));
 
     }
 
@@ -61,8 +64,13 @@ public class StreamBasic {
 
     //400칼로리 이하인 메뉴를 다이어트로, 아닐 경우 일반으로 그룹핑해라.
     public static Map<String, List<Dish>>  getGroupingMenu(List<Dish> dishes){
-        return null;
-
+        return dishes.stream() //Stream<Dish>
+                //collect(Collector) Collectors.groupingBy(Function<Dish,String>)
+                .collect(groupingBy(dish -> {
+                        if(dish.getCalories() <= 400) return "diet";
+                        else return "normal";
+                    })
+                );
     }
 
 
