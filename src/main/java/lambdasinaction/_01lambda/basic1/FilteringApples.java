@@ -1,6 +1,7 @@
 package lambdasinaction._01lambda.basic1;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class FilteringApples {
 
@@ -12,6 +13,18 @@ public class FilteringApples {
 						new Apple(120, "red"));
 
 		//filter method 호출
+		//1. Anonymous Inner Class
+		filter(inventory, new ApplePredicate<Apple>() {
+			@Override
+			public boolean test(Apple a) {
+				return a.getColor().equals("green");
+			}
+		}).forEach(new Consumer<Apple>() {
+			@Override
+			public void accept(Apple apple) {
+				System.out.println(apple);
+			}
+		});
 
 	}
 
@@ -45,7 +58,7 @@ public class FilteringApples {
 		return result;
 	}
 
-	public static List<Apple> filter(List<Apple> inventory, ApplePredicate p) {
+	public static List<Apple> filter(List<Apple> inventory, ApplePredicate<Apple> p) {
 		List<Apple> result = new ArrayList<>();
 		for (Apple apple : inventory) {
 			if (p.test(apple)) {
@@ -55,23 +68,24 @@ public class FilteringApples {
 		return result;
 	}
 
-	interface ApplePredicate {
+	@FunctionalInterface
+	interface ApplePredicate<Apple> {
 		public boolean test(Apple a);
 	}
 
-	static class AppleWeightPredicate implements ApplePredicate {
+	static class AppleWeightPredicate implements ApplePredicate<Apple> {
 		public boolean test(Apple apple) {
 			return apple.getWeight() > 150;
 		}
 	}
 
-	static class AppleColorPredicate implements ApplePredicate {
+	static class AppleColorPredicate implements ApplePredicate<Apple> {
 		public boolean test(Apple apple) {
 			return "green".equals(apple.getColor());
 		}
 	}
 
-	static class AppleRedAndHeavyPredicate implements ApplePredicate {
+	static class AppleRedAndHeavyPredicate implements ApplePredicate<Apple> {
 		public boolean test(Apple apple) {
 			return "red".equals(apple.getColor()) && apple.getWeight() > 150;
 		}
