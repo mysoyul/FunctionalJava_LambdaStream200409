@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
@@ -20,6 +21,9 @@ public class StreamBasic {
 
         System.out.println(getGroupingMenu(Dish.menu));
 
+        System.out.println(getMaxCaloryDish(Dish.menu));
+
+        System.out.println(getMaxCaloryDishIntStream(Dish.menu));
     }
 
     public static List<String> getLowCaloricDishesNamesInJava7(List<Dish> dishes){
@@ -60,8 +64,6 @@ public class StreamBasic {
                 .toList().subList(0,3);
     }
 
-
-
     //400칼로리 이하인 메뉴를 다이어트로, 아닐 경우 일반으로 그룹핑해라.
     public static Map<String, List<Dish>>  getGroupingMenu(List<Dish> dishes){
         return dishes.stream() //Stream<Dish>
@@ -73,11 +75,22 @@ public class StreamBasic {
                 );
     }
 
-
     //가장 칼로리가 높은 메뉴를 찾아라
     public static Dish getMaxCaloryDish (List<Dish> dishes) {
-        return null;
+        //Stream 의 max()
+        return dishes.stream()  //Stream<Dish>
+                //.max(comparingInt(dish -> dish.getCalories()))
+                .max(comparingInt(Dish::getCalories)) //Optional<Dish>
+                //.get();  //Dish
+                //.orElse(new Dish());
+                .orElseGet(Dish::new); //() -> new Dish()
+    }
 
-
+    public static int getMaxCaloryDishIntStream (List<Dish> dishes) {
+        return dishes.stream()
+                //IntStream mapToInt(ToIntFunction<? super T> mapper);
+                .mapToInt(Dish::getCalories)
+                .max() //OptionalInt
+                .orElse(0);
     }
 }
