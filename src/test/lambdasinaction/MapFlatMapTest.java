@@ -19,37 +19,37 @@ public class MapFlatMapTest {
                 new Customer(103, "peter", "peter@gmail.com", Arrays.asList("38946328654", "3286487236")),
                 new Customer(104, "kely", "kely@gmail.com", Arrays.asList("389246829364", "948609467"))
         );
-        //email주소 목록 List<String>
+        //email 주소 목록 List<String>
         List<String> emailList = customers.stream()  //Stream<Customer>
-                .map(cust -> cust.getEmail()) //Stream<String>
-                .collect(toList());//List<String>
+                .map(Customer::getEmail) //Stream<String>
+                .toList();//List<String>
 
         emailList.forEach(System.out::println);
 
         customers.stream()
                 .map(Customer::getEmail)
-                .collect(toList())
+                .toList()
                 .forEach(System.out::println);
 
         //map() : <R> Stream<R> map(Function<? super T,? extends R> mapper)
         List<List<String>> phoneList = customers.stream() //Stream<Customer>
-                .map(cust -> cust.getPhoneNumbers()) //Stream<List<String>>
-                .collect(toList()); //List<List<String>>
-        System.out.println("phoneList = " + phoneList);
+                .map(Customer::getPhoneNumbers) //Stream<List<String>>
+                .toList(); //List<List<String>>
+        System.out.println("map() phoneList = " + phoneList);
 
         //flatMap : <R> Stream<R> flatMap(Function<? super T,? extends Stream<? extends R>> mapper)
         List<String> phoneList2 = customers.stream() //Stream<Customer>
-                .flatMap(customer -> customer.getPhoneNumbers().stream())   //Stream<Stream<List<String>>>
-                .collect(toList());
-        System.out.println("phoneList2 = " + phoneList2);
+                .flatMap(customer -> customer.getPhoneNumbers().stream())   //Stream<String>>
+                .toList();
+        System.out.println("flatMap() phoneList = " + phoneList2);
 
     }
 
     static class Customer {
-        private int id;
-        private String name;
-        private String email;
-        private List<String> phoneNumbers;
+        private final int id;
+        private final String name;
+        private final String email;
+        private final List<String> phoneNumbers;
 
         public Customer(int id, String name, String email, List<String> phoneNumbers) {
             this.id = id;
