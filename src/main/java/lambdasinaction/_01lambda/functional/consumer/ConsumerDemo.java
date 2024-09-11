@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 
 public class ConsumerDemo {
 	
-	
 	public static void printAppleInfo(List<Apple> inventory,Consumer<Apple> consumer){
 		for (Apple apple : inventory) {
 			consumer.accept(apple);

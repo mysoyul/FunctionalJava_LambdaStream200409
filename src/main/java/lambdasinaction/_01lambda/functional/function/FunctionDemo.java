@@ -6,7 +6,8 @@ import java.util.function.Function;
 
 public class FunctionDemo {
 
-	public static List<String> getColorList(List<Apple> inventory, Function<Apple, String> function) {
+	public static List<String> getColorList(List<Apple> inventory,
+											Function<Apple, String> function) {
 		List<String> colorList = new ArrayList<String>();
 		for (Apple apple : inventory) {
 			colorList.add(function.apply(apple));
@@ -22,15 +23,20 @@ public class FunctionDemo {
 		inventory.add(new Apple(150, "red"));
 
 		// 1. using anonymous inner class
-
-		
+		getColorList(inventory,new Function<Apple, String>() {
+			@Override
+			public String apply(Apple apple) {
+				return apple.getColor();
+			}
+		});
 
 		// 2. lambda expression
-		
+		getColorList(inventory, apple -> apple.getColor());
 
 		// 3. Method Reference
-		// Function<Apple,String> function = Apple :: getColor;
-		
+		getColorList(inventory, Apple::getColor).forEach(System.out::println);
+		Function<Apple, String> getColorFunc = Apple::getColor;
+		getColorList(inventory, getColorFunc);
 
 	}
 
