@@ -26,6 +26,15 @@ public class FilteringApples {
 			}
 		});
 
+		//2. Lambda 식
+		System.out.println("===> 람다식");
+		filter(inventory, apple -> apple.getColor().equals("red"))
+				.forEach(apple -> System.out.println("Red Apple " + apple));
+
+		//3. Method Reference
+		System.out.println("===> Method Reference");
+		filter(inventory, apple -> apple.getWeight() > 100)
+				.forEach(System.out::println);
 	}
 
 	public static List<Apple> filterGreenApples(List<Apple> inventory) {
