@@ -19,7 +19,9 @@ public class _01BuildingStreams {
 
         // Arrays._02stream
         int[] numbers = {2, 3, 5, 7, 11, 13};
-        System.out.println(Arrays.stream(numbers).sum());
+        System.out.println(
+                 Arrays.stream(numbers) //IntStream
+                .sum());
 
         // Stream.iterate
         Stream.iterate(0, n -> n + 2)
@@ -67,7 +69,7 @@ public class _01BuildingStreams {
          IntStream.generate(fib).limit(10).forEach(System.out::println);
 
          long uniqueWords = Files.lines(Paths.get("data.txt"), Charset.defaultCharset())
-                                 .flatMap(line -> Arrays.stream(line.split(" ")))
+                                 .flatMap(line -> Arrays.stream(line.split(" "))) //Stream<String>
                                  .distinct()
                                  .count();
 

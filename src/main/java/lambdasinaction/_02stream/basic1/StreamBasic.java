@@ -87,6 +87,7 @@ public class StreamBasic {
     }
 
     public static int getMaxCaloryDishIntStream (List<Dish> dishes) {
+        //IntStream 의 max()
         return dishes.stream()
                 //IntStream mapToInt(ToIntFunction<? super T> mapper);
                 .mapToInt(Dish::getCalories)
