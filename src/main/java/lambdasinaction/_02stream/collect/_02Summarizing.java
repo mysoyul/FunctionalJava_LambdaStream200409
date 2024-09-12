@@ -2,6 +2,7 @@ package lambdasinaction._02stream.collect;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.*;
@@ -62,13 +63,16 @@ public class _02Summarizing {
     //4. summarizingInt() 사용
     private static IntSummaryStatistics calculateMenuStatistics() {
 
-        return null;
+        return menu.stream()
+                .collect(summarizingInt(getCaloricFunction()));
     }
 
     //5. joining() 사용
     private static String getShortMenu() {
 
-        return "";
+        return menu.stream()
+                .map(Dish::getName)
+                .collect(joining(" "));
     }
 
     private static String getShortMenuCommaSeparated() {
