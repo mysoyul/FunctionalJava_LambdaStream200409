@@ -55,9 +55,10 @@ public class PuttingIntoPractice{
         System.out.println("names = " + names);
 
         // Query 5: Are there any trader based in Milan?
-
-
-
+        boolean milanBased = transactions.stream()
+                .map(Transaction::getTrader)
+                .anyMatch(tr -> tr.getCity().equals("Milan"));
+        System.out.println("milanBased = " + milanBased);
 
         // Query 6: Update all transactions so that the traders from Milan are set to Cambridge.
 
