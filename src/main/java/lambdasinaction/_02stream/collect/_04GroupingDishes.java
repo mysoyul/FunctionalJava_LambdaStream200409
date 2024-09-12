@@ -1,9 +1,9 @@
 package lambdasinaction._02stream.collect;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.function.Function;
 
-import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.*;
 import static lambdasinaction._02stream.collect.Dish.menu;
 
@@ -22,41 +22,24 @@ public class _04GroupingDishes {
         System.out.println("Caloric levels by type: " + caloricLevelsByType());
     }
 
-    //------------- 공통 메서드 시작 -------------
-    private static Function<Dish, Dish.Type> getTypeFunction() {
-        return Dish::getType;
-    }
-
-    private static Function<Dish, CaloricLevel> getCaloricLevelFunction() {
-        return dish -> {
-            if (dish.getCalories() <= 400) return CaloricLevel.DIET;
-            else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
-            else return CaloricLevel.FAT;
-        };
-    }
-
-    private static Comparator<Dish> getDishComparator() {
-        return comparingInt(Dish::getCalories);
-    }
-    //------------- 공통 메서드 끝 -------------
 
     //1. type별 그룹핑
     private static Map<Dish.Type, List<Dish>> groupDishesByType() {
         return menu.stream()
-                .collect(groupingBy(getTypeFunction()));
+                .collect(groupingBy(DishFunctions.getTypeFunction()));
     }
 
     //2. 칼로리별 그룹핑
     private static Map<CaloricLevel, List<Dish>> groupDishesByCaloricLevel() {
         return menu.stream()
-                .collect(groupingBy(getCaloricLevelFunction()));
+                .collect(groupingBy(DishFunctions.getCaloricLevelFunction()));
     }
     //3. type별로 그룹핑 후에 다시 칼로리별로 그룹핑
     private static Map<Dish.Type, Map<CaloricLevel, List<Dish>>> groupDishedByTypeAndCaloricLevel() {
         return menu.stream()
                 .collect(groupingBy(
-                                getTypeFunction(),
-                                groupingBy(getCaloricLevelFunction())
+                                DishFunctions.getTypeFunction(),
+                                groupingBy(DishFunctions.getCaloricLevelFunction())
                             )
                         );
     }
@@ -64,7 +47,7 @@ public class _04GroupingDishes {
     private static Map<Dish.Type, Long> countDishesInGroups() {
         return menu.stream()
                 .collect(groupingBy(
-                            getTypeFunction(),
+                        DishFunctions.getTypeFunction(),
                             counting()
                         )
                 );
@@ -73,8 +56,8 @@ public class _04GroupingDishes {
     private static Map<Dish.Type, Optional<Dish>> mostCaloricDishesByType() {
         return menu.stream()
                 .collect(groupingBy(
-                                getTypeFunction(),
-                                maxBy(getDishComparator())
+                        DishFunctions.getTypeFunction(),
+                                maxBy(DishFunctions.getDishComparator())
                         )
                 );
     }
@@ -83,20 +66,43 @@ public class _04GroupingDishes {
     private static Map<Dish.Type, Dish> mostCaloricDishesByTypeWithoutOptionals() {
         return menu.stream()
                 .collect(groupingBy(
-                        getTypeFunction(),
-                        collectingAndThen(maxBy(getDishComparator()),Optional::get)
+                        DishFunctions.getTypeFunction(),
+                        collectingAndThen(maxBy(DishFunctions.getDishComparator()),Optional::get)
                 ));
     }
 
+    /*
+        public static <T,K,U> Collector<T,?,Map<K,U>> toMap(Function<? super T,? extends K> keyMapper,
+                                                            Function<? super T,? extends U> valueMapper,
+                                                            BinaryOperator<U> mergeFunction)
+     */
+    private static Map<Dish.Type, Dish> mostCaloricDishesByTypeToMap() {
+        return menu.stream()
+                .collect(toMap(
+                        DishFunctions.getTypeFunction(),
+                        Function.identity(),
+                        BinaryOperator.maxBy(DishFunctions.getDishComparator())
+                ));
+    }
+
+
     //6. type별로 그룹핑하여 칼로리의 합계 내기
     private static Map<Dish.Type, Integer> sumCaloriesByType() {
-        return null;
+        return menu.stream()
+                .collect(groupingBy(
+                        DishFunctions.getTypeFunction(),
+                                summingInt(Dish::getCalories)
+                        )
+                );
     }
 
     private static Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType() {
         return menu.stream().collect(
-                groupingBy(getTypeFunction(), mapping(
-                        getCaloricLevelFunction(),
-                        toSet() )));
+                groupingBy(
+                        DishFunctions.getTypeFunction(),
+                        mapping(
+                                DishFunctions.getCaloricLevelFunction(),
+                                toSet()
+                        )));
     }
 }

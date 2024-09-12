@@ -1,24 +1,53 @@
 package lambdasinaction;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class MapFlatMapTest {
+    List<Customer> customers = List.of(
+            new Customer(101, "john", "john@gmail.com", Arrays.asList("397937955", "21654725")),
+            new Customer(102, "smith", "smith@gmail.com", Arrays.asList("89563865", "2487238947")),
+            new Customer(103, "peter", "peter@gmail.com", Arrays.asList("38946328654", "3286487236")),
+            new Customer(104, "kelly", "kely@gmail.com", Arrays.asList("389246829364", "948609467"))
+    );
+
+    @Test
+    void toMap() {
+        /*
+        Map<String, String> phoneBook
+               = people.stream().collect(
+                 toMap(Person::getName,
+                       Person::getAddress,
+                       (s, a) -> s + ", " + a));
+         */
+
+        Map<String, String> map = customers.stream()
+                .collect(Collectors.toMap(Customer::getName, Customer::getEmail));
+        System.out.println("map = " + map);
+
+        Map<String, String> stringMap = customers.stream()
+                .collect(Collectors.toMap(
+                        Customer::getName,
+                        Customer::getEmail,
+                        (s, a) -> s + ", " + a
+                ));
+        System.out.println("stringMap = " + stringMap);
+
+    }
+
+
     /*
         Stream 의 map() 과 flatMap의 차이점 이해
     */
-    @Test
+    @Test @Disabled
     public void transformUsingStream() {
-        List<Customer> customers = List.of(
-                new Customer(101, "john", "john@gmail.com", Arrays.asList("397937955", "21654725")),
-                new Customer(102, "smith", "smith@gmail.com", Arrays.asList("89563865", "2487238947")),
-                new Customer(103, "peter", "peter@gmail.com", Arrays.asList("38946328654", "3286487236")),
-                new Customer(104, "kely", "kely@gmail.com", Arrays.asList("389246829364", "948609467"))
-        );
         //email 주소 목록 List<String>
         List<String> emailList = customers.stream()  //Stream<Customer>
                 .map(Customer::getEmail) //Stream<String>
