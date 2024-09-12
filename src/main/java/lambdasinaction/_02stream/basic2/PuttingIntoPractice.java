@@ -61,13 +61,19 @@ public class PuttingIntoPractice{
         System.out.println("milanBased = " + milanBased);
 
         // Query 6: Update all transactions so that the traders from Milan are set to Cambridge.
-
-
-
+        System.out.println("Before = " + transactions);
+        transactions.stream()
+                .map(Transaction::getTrader)
+                .filter(tr -> tr.getCity().equals("Milan"))
+                .forEach(tr -> tr.setCity("Cambridge"));
+        System.out.println("After = " + transactions);
 
         // Query 7: What's the highest value in all the transactions?
-
-
+        int maxValue = transactions.stream()
+                .mapToInt(Transaction::getValue)
+                .max()
+                .orElse(0);
+        System.out.println("maxValue = " + maxValue);
 
     }
 }
