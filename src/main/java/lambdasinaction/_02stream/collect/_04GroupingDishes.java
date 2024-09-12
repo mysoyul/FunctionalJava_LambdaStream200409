@@ -21,10 +21,19 @@ public class _04GroupingDishes {
         System.out.println("Caloric levels by type: " + caloricLevelsByType());
     }
 
-    //공통 메서드
+    //------------- 공통 메서드 시작 -------------
     private static Function<Dish, Dish.Type> getTypeFunction() {
         return Dish::getType;
     }
+
+    private static Function<Dish, CaloricLevel> getCaloricLevelFunction() {
+        return dish -> {
+            if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+            else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+            else return CaloricLevel.FAT;
+        };
+    }
+    //------------- 공통 메서드 끝 -------------
 
     //1. type별 그룹핑
     private static Map<Dish.Type, List<Dish>> groupDishesByType() {
@@ -61,9 +70,9 @@ public class _04GroupingDishes {
     private static Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType() {
         return menu.stream().collect(
                 groupingBy(getTypeFunction(), mapping(
-                        dish -> { if (dish.getCalories() <= 400) return CaloricLevel.DIET;
-                        else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
-                        else return CaloricLevel.FAT; },
+                        getCaloricLevelFunction(),
                         toSet() )));
     }
+
+
 }
