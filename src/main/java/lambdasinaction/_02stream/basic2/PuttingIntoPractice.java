@@ -39,9 +39,13 @@ public class PuttingIntoPractice{
         System.out.println("cityList = " + cityList);
 
         // Query 3: Find all traders from Cambridge and sort them by name.
-
-
-
+        List<Trader> traderList = transactions.stream()
+                .map(Transaction::getTrader)
+                .filter(tr -> tr.getCity().equals("Cambridge"))
+                .distinct()
+                .sorted(comparing(Trader::getName))
+                .toList();
+        System.out.println("traderList = " + traderList);
         // Query 4: Return a string of all traders names sorted alphabetically.
 
 
