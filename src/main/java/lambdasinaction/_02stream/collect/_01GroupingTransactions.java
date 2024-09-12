@@ -55,6 +55,14 @@ public class _01GroupingTransactions {
                         summingDouble(Transaction::getValue)
                 ));
         System.out.println("currencyValueMap = " + currencyValueMap);
+
+        //Currency 별 Transaction 그룹핑하고 value >= 5000 True / False 로 분류하기
+        Map<Currency, Map<Boolean, List<Transaction>>> grater5000Map = transactions.stream()
+                .collect(groupingBy(
+                        Transaction::getCurrency,
+                        partitioningBy(tx -> tx.getValue() >= 5000)
+                ));
+        System.out.println("grater5000Map = " + grater5000Map);
     }
 
     public static class Transaction {
