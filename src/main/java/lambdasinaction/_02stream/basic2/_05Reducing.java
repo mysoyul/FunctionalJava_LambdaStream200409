@@ -87,14 +87,14 @@ public class _05Reducing {
                 .orElse(0);
         System.out.println("totalValue2 = " + totalValue);
 
-        //3. mapToInt()사용하여 IntStream 변환하여 sum() 호출
+        //3. mapToInt()사용하여 IntStream 변환하여 sum() 호출 ( 권장 )
         totalValue = menu.stream()
                 //.mapToInt(dish -> dish.getCalories())
                 .mapToInt(Dish::getCalories) //IntStream
                 .sum();
         System.out.println("totalValue3 = " + totalValue);
 
-        //4. Collectors의 summingInt() 호출
+        //4. Collectors 의 summingInt() 호출
         totalValue = menu.stream()
                 .collect(summingInt(Dish::getCalories));
         System.out.println("totalValue4 = " + totalValue);

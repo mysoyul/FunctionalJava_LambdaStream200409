@@ -3,6 +3,7 @@ package lambdasinaction._02stream.basic2;
 import java.util.*;
 
 import static java.util.Comparator.comparing;
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
 
 public class PuttingIntoPractice{
@@ -21,11 +22,13 @@ public class PuttingIntoPractice{
                 new Transaction(alan, 2012, 950)
         );
 
-
         // Query 1: Find all transactions from year 2011 and sort them by value (small to high).
-
-
-
+        List<Transaction> txList2011 = transactions
+                .stream() //Stream<Transaction>
+                .filter(tx -> tx.getYear() == 2011)
+                .sorted(comparingInt(Transaction::getValue))
+                .toList();
+        System.out.println("txList2011 = " + txList2011);
 
         // Query 2: What are all the unique cities where the traders work?
 
