@@ -42,10 +42,19 @@ public class _01GroupingTransactions {
 
     //Java8 groupingBy 사용
     private static void groupFunctionally() {
+        //Currency 별 Transaction 그룹핑하기
         Map<Currency, List<Transaction>> currencyListMap = transactions
                 .stream()
                 .collect(groupingBy(Transaction::getCurrency));
         System.out.println("currencyListMap = " + currencyListMap);
+
+        //Currency 별 Transaction 그룹핑하고 value 합계 구하기
+        Map<Currency, Double> currencyValueMap = transactions.stream()
+                .collect(groupingBy(
+                        Transaction::getCurrency,
+                        summingDouble(Transaction::getValue)
+                ));
+        System.out.println("currencyValueMap = " + currencyValueMap);
     }
 
     public static class Transaction {
