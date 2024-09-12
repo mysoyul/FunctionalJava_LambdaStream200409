@@ -47,8 +47,12 @@ public class PuttingIntoPractice{
                 .toList();
         System.out.println("traderList = " + traderList);
         // Query 4: Return a string of all traders names sorted alphabetically.
-
-
+        String names = transactions.stream()
+                .map(tx -> tx.getTrader().getName())
+                .distinct()
+                .sorted()
+                .reduce("", (s1, s2) -> s1 + s2);
+        System.out.println("names = " + names);
 
         // Query 5: Are there any trader based in Milan?
 
