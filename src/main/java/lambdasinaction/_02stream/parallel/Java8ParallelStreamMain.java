@@ -12,9 +12,11 @@ public class Java8ParallelStreamMain {
         System.out.println("Using Sequential Stream");
         System.out.println("=================================");
 
+        //Sequential Stream
         IntStream intArrStream = Arrays.stream(array);
         intArrStream.forEach(s ->
                 {
+                    //main
                     System.out.println(s + " " + Thread.currentThread().getName());
                 }
         );
@@ -22,9 +24,12 @@ public class Java8ParallelStreamMain {
         System.out.println("=================================");
         System.out.println("Using Parallel Stream");
         System.out.println("=================================");
+
+        //Parallel Stream
         IntStream intParallelStream = Arrays.stream(array).parallel();
         intParallelStream.forEach(s ->
                 {
+                    //ForkJoinPool.commonPool-worker-1
                     System.out.println(s + " " + Thread.currentThread().getName());
                 }
         );
