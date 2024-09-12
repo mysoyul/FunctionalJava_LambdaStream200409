@@ -7,6 +7,7 @@ import static java.time.temporal.TemporalAdjusters.*;
 public class MartClosedDay {
     public static void main(String[] args) {
         LocalDate today = LocalDate.now();
+        //today = LocalDate.of(2024,9,25);
         System.out.println("현재날짜 = " + today);
 
         //Temporal 인터페이스 default Temporal with(TemporalAdjuster adjuster)
