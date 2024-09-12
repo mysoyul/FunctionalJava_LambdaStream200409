@@ -26,14 +26,17 @@ public class PuttingIntoPractice{
         List<Transaction> txList2011 = transactions
                 .stream() //Stream<Transaction>
                 .filter(tx -> tx.getYear() == 2011)
-                .sorted(comparingInt(Transaction::getValue))
+                //.sorted(comparingInt(Transaction::getValue)) //ascending
+                .sorted(comparingInt(Transaction::getValue).reversed()) //descending
                 .toList();
         System.out.println("txList2011 = " + txList2011);
 
         // Query 2: What are all the unique cities where the traders work?
-
-
-
+        List<String> cityList = transactions.stream() //Stream<Transaction>
+                .map(tx -> tx.getTrader().getCity()) //Stream<String>
+                .distinct()
+                .toList();
+        System.out.println("cityList = " + cityList);
 
         // Query 3: Find all traders from Cambridge and sort them by name.
 
