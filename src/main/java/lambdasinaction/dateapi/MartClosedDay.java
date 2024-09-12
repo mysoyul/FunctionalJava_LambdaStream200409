@@ -18,8 +18,14 @@ public class MartClosedDay {
             LocalDate secondDay = theDay.with(dayOfWeekInMonth(2, DayOfWeek.SUNDAY));
             LocalDate fourthDay = theDay.with(dayOfWeekInMonth(4, DayOfWeek.SUNDAY));
             //3. 기준날짜와 비교하기
+            if(theDay.isBefore(secondDay)){
+                return secondDay;
+            }else if(theDay.isBefore(fourthDay)){
+                return fourthDay;
+            }else {
+                return theDay.plusMonths(1).with(dayOfWeekInMonth(2, DayOfWeek.SUNDAY));
+            }
 
-            return theDay;
         });
         System.out.println("휴무일 = " + closedDay);
 
