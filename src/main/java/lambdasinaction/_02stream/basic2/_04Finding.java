@@ -17,6 +17,10 @@ public class _04Finding {
         
         Optional<Dish> dish = findVegetarianDish();
         dish.ifPresent(d -> System.out.println(d.getName()));
+        dish.ifPresentOrElse(
+                d -> System.out.println(d.getName()),
+                () -> System.out.println("Dish Not Found")
+        );
     }
 
     //1. anyMatch
@@ -34,8 +38,8 @@ public class _04Finding {
     }
     //4. findAny
     private static Optional<Dish> findVegetarianDish(){
-
-        return null;
+        //return menu.stream().filter(Dish::isVegetarian).findAny();
+        return menu.stream().filter(dish -> dish.getCalories() > 800).findAny();
     }
     
 }
