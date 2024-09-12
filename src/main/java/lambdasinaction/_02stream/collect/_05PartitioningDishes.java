@@ -1,6 +1,7 @@
 package lambdasinaction._02stream.collect;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.*;
@@ -16,8 +17,11 @@ public class _05PartitioningDishes {
 
     //1. 채식요리와 채식요리가 아닌 것으로 분류하기
     private static Map<Boolean, List<Dish>> partitionByVegeterian() {
-        return null;
+        return menu.stream()
+                .collect(partitioningBy(DishFunctions.getIsVegetarian()));
     }
+
+
     //2. 채식요리와 채식요리가 아닌 것으로 분류한 다음 type별로 그룹핑 하기
     private static Map<Boolean, Map<Dish.Type, List<Dish>>> vegetarianDishesByType() {
         return null;

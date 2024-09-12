@@ -2,6 +2,7 @@ package lambdasinaction._02stream.collect;
 
 import java.util.Comparator;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class DishFunctions {
     //------------- 공통 메서드 시작 -------------
@@ -19,6 +20,10 @@ public class DishFunctions {
 
     static Comparator<Dish> getDishComparator() {
         return Comparator.comparingInt(Dish::getCalories);
+    }
+
+    static Predicate<Dish> getIsVegetarian() {
+        return Dish::isVegetarian;
     }
 
     //------------- 공통 메서드 끝 -------------
