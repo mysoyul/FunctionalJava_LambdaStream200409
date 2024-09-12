@@ -3,6 +3,7 @@ package lambdasinaction._02stream.collect;
 import java.util.*;
 import java.util.function.Function;
 
+import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.*;
 import static lambdasinaction._02stream.collect.Dish.menu;
 
@@ -32,6 +33,10 @@ public class _04GroupingDishes {
             else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
             else return CaloricLevel.FAT;
         };
+    }
+
+    private static Comparator<Dish> getDishComparator() {
+        return comparingInt(Dish::getCalories);
     }
     //------------- 공통 메서드 끝 -------------
 
@@ -66,11 +71,21 @@ public class _04GroupingDishes {
     }
     //5. type별 그룹에서 가장 칼로리가 높은 Dish 찾기
     private static Map<Dish.Type, Optional<Dish>> mostCaloricDishesByType() {
-        return null;
+        return menu.stream()
+                .collect(groupingBy(
+                                getTypeFunction(),
+                                maxBy(getDishComparator())
+                        )
+                );
     }
+
     //5.1 type별 그룹에서 가장 칼로리가 높은 Dish 찾기 - collectingAndThen() 사용
     private static Map<Dish.Type, Dish> mostCaloricDishesByTypeWithoutOptionals() {
-        return null;
+        return menu.stream()
+                .collect(groupingBy(
+                        getTypeFunction(),
+                        collectingAndThen(maxBy(getDishComparator()),Optional::get)
+                ));
     }
 
     //6. type별로 그룹핑하여 칼로리의 합계 내기
