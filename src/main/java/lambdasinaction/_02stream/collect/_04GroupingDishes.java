@@ -1,6 +1,7 @@
 package lambdasinaction._02stream.collect;
 
 import java.util.*;
+import java.util.function.Function;
 
 import static java.util.stream.Collectors.*;
 import static lambdasinaction._02stream.collect.Dish.menu;
@@ -20,10 +21,17 @@ public class _04GroupingDishes {
         System.out.println("Caloric levels by type: " + caloricLevelsByType());
     }
 
+    //공통 메서드
+    private static Function<Dish, Dish.Type> getTypeFunction() {
+        return Dish::getType;
+    }
+
     //1. type별 그룹핑
     private static Map<Dish.Type, List<Dish>> groupDishesByType() {
-        return null;
+        return menu.stream()
+                .collect(groupingBy(getTypeFunction()));
     }
+
     //2. 칼로리별 그룹핑
     private static Map<CaloricLevel, List<Dish>> groupDishesByCaloricLevel() {
         return null;
@@ -52,7 +60,7 @@ public class _04GroupingDishes {
 
     private static Map<Dish.Type, Set<CaloricLevel>> caloricLevelsByType() {
         return menu.stream().collect(
-                groupingBy(Dish::getType, mapping(
+                groupingBy(getTypeFunction(), mapping(
                         dish -> { if (dish.getCalories() <= 400) return CaloricLevel.DIET;
                         else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
                         else return CaloricLevel.FAT; },

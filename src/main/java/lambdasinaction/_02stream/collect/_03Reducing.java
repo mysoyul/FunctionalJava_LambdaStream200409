@@ -26,7 +26,8 @@ public class _03Reducing {
     }
     //map - reduce 사용
     private static int calculateTotalCaloriesWithoutCollectors() {
-        return menu.stream().map(Dish::getCalories)
+        return menu.stream()
+                .map(Dish::getCalories)
                 .reduce(Integer::sum) //Optional<Dish>
                 .orElse(0);
     }
