@@ -1,10 +1,12 @@
 package lambdasinaction;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -19,7 +21,7 @@ public class LambdaTest {
            UnaryOperator : R apply(T t)
            BinaryOperator : R apply(T t, U u)
     */
-    @Test
+    @Test @Disabled
     public void lambdaTest() {
         //Functional Interface 가 가진 추상메서드를 재정의할때 람다식으로 작성하기
 
@@ -58,5 +60,12 @@ public class LambdaTest {
         stringList.forEach(System.out::println);
     }
 
+
+    @Test
+    void sorted() {
+        Stream.of("java","test","scala","aaa")
+                .sorted()
+                .forEach(System.out::println);
+    }
 
 }
