@@ -20,6 +20,10 @@ public class _02Summarizing {
         System.out.println("Short menu comma separated: " + getShortMenuCommaSeparated());
     }
 
+    private static ToIntFunction<Dish> getCaloricFunction() {
+        return Dish::getCalories;
+    }
+
 
     private static long howManyDishes() {
         return menu.stream().collect(counting());
@@ -29,7 +33,7 @@ public class _02Summarizing {
     private static Dish findMostCaloricDishUsingComparator() {
 
         return menu.stream()
-                .collect(maxBy(comparingInt(Dish::getCalories)))
+                .collect(maxBy(comparingInt(getCaloricFunction())))
                 .orElse(new Dish());
     }
 
@@ -43,17 +47,21 @@ public class _02Summarizing {
     //2. summingInt() 사용
     private static int calculateTotalCalories() {
 
-        return 0;
+        return menu.stream()
+                .collect(summingInt(getCaloricFunction()));
     }
+
 
     //3. averagingInt() 사용
     private static Double calculateAverageCalories() {
 
-        return 0.0;
+        return menu.stream()
+                .collect(averagingInt(getCaloricFunction()));
     }
 
     //4. summarizingInt() 사용
     private static IntSummaryStatistics calculateMenuStatistics() {
+
         return null;
     }
 
