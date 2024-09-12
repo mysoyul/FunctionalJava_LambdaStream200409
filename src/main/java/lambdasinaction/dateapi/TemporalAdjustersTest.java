@@ -10,7 +10,7 @@ public class TemporalAdjustersTest {
 	public static void main(String[] args) {
 		LocalDate d = LocalDate.now();
 		//public LocalDate with(TemporalAdjuster adjuster)
-		//TemporalAdjusters는 TemporalAdjuster를 생성하는 Factory 클래스이다.
+		//TemporalAdjusters 는 TemporalAdjuster 를 생성하는 Factory 클래스이다.
 
 		System.out.println("두번째 금요일 "+
 				d.with(dayOfWeekInMonth(2, DayOfWeek.FRIDAY)));
@@ -18,7 +18,7 @@ public class TemporalAdjustersTest {
 				d.with(firstDayOfNextMonth()));
 		System.out.println("첫번째 목요일 " + 
 				d.with(firstInMonth(DayOfWeek.THURSDAY)));
-		System.out.println("이번달의 마지막날 "+d.with(lastDayOfMonth()));
+		System.out.println("이번달의 마지막날 "+ d.with(lastDayOfMonth()));
 		System.out.println("이번달의 마지막 월요일 "+ 
 					d.with(lastInMonth(DayOfWeek.MONDAY)));
 		System.out.println("다음 수요일 "+ 
