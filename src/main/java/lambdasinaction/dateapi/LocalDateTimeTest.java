@@ -16,7 +16,7 @@ public class LocalDateTimeTest {
 		System.out.println(today.compareTo(today2)); //0
 		
 		System.out.println("년월일 : " + today.getYear()+ " " +
-						today.getMonth() + " " + today.getMonthValue()+" "+
+						today.getMonth() + " " + today.getMonthValue() +" "+
 						today.getDayOfMonth());
 		System.out.println("요일 :" + today.getDayOfWeek() + " " +
 						today.getDayOfWeek().getValue());
